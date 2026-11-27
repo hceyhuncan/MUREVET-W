@@ -50,6 +50,8 @@ Etkinlik çarpanı: Türk düğünlerinde kına ve nişan da ayrı etkinlik. Tek
 | Video depolama maliyeti | Marj | Video süresi limiti, sıkıştırma, paket bazlı saklama süresi |
 
 ## Fiyat önerisine etkisi (ürün tanımı §7 için)
+> **Güncelleme (2026-11-27):** Can satış modelini değiştirdi: uygulama içi satış yok, ofiste sözleşmeli modül paketleri (~50.000-100.000 TL). Aşağıdaki uygulama içi fiyat önerisi geçersizdir; rakip fiyatları sadece referans olarak kalır. Murevet bu modelle düşük fiyatlı uygulamalarla değil, premium düğün hizmetleriyle (organizasyon, fotoğraf/video ekipleri) aynı bütçe kalemine girer.
+
 Yurt dışı referans etkinlik başına ~£20-50 (≈ 25-60 USD). Türk rakip 29,99-69,99 USD. Türk dijital davetiye 400-1.000 TL.
 Öneri (TAHMİN, satın alma gücüne göre yurt dışının altında): **Davet ~499 TL, Salon ~999 TL, Saray ~1.999 TL**, Deneme ücretsiz. Kapalı testte ve ilk 50 düğünde ödeme isteği sorulacak.
 

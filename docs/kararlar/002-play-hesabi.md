@@ -13,7 +13,7 @@ Play'de yayın için geliştirici hesabı gerekir. Hesap türü, mağazada gör�
 ## Karar
 **Kurumsal hesap: Lotus Sport Teknoloji** (Entertech Teknokent). Şirket daha önce Exereyes uygulamasını yayınladı.
 
-- Exereyes şirketin Play Console hesabından yayınlandıysa Murevet **aynı hesapta yeni uygulama** olarak açılır: yeni kayıt ücreti, D-U-N-S veya kimlik doğrulama gerekmez; kurumsal hesap kapalı test şartından muaftır (DOĞRULA). Açık soru: hesap şirket adına mı?
+- Exereyes şirketin Play Console hesabından yayınlandıysa Murevet **aynı hesapta yeni uygulama** olarak açılır: yeni kayıt ücreti, D-U-N-S veya kimlik doğrulama gerekmez; kurumsal hesap kapalı test şartından muaftır (DOĞRULA). Can doğruladı (2026-11-27): Murevet aynı şirket hesabından yayınlanacak.
 - Hesap bireysel ise şirket adına yeni kurumsal hesap açılır veya mevcut hesap kuruluşa dönüştürülür (DOĞRULA süreç).
 
 ## Sonuçları
