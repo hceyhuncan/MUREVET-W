@@ -109,6 +109,8 @@ void main() {
           membership: Stream.value(member(MemberRole.guest)),
           uid: 'g1',
           program: FakeProgram(),
+          memories: FakeMemories(),
+          picker: FakePicker(),
         ),
       ),
     );

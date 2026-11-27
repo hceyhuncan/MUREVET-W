@@ -3,7 +3,7 @@ import { getAuth } from 'firebase-admin/auth';
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 import { setGlobalOptions } from 'firebase-functions/v2';
-import { onDocumentWritten } from 'firebase-functions/v2/firestore';
+import { onDocumentDeleted, onDocumentWritten } from 'firebase-functions/v2/firestore';
 import { CallableRequest, HttpsError, onCall } from 'firebase-functions/v2/https';
 import { generateCode, GUEST_CODE_LENGTH, normalizeCode, OWNER_CODE_LENGTH } from './codes';
 import { parseModules, reqString } from './validate';
@@ -209,6 +209,15 @@ export const onCommentWrite = onDocumentWritten('weddings/{w}/posts/{p}/comments
   if (delta === 0) return;
   const ref = db().doc(`weddings/${event.params.w}/posts/${event.params.p}`);
   await ref.update({ commentCount: FieldValue.increment(delta) }).catch(() => undefined);
+});
+
+// Gönderi silinince (yazar veya sahip) medya dosyası, beğeni ve yorumlar temizlenir.
+// Sahip başkasının dosyasını Storage'dan silemediği için temizlik sunucuda.
+export const onPostDelete = onDocumentDeleted('weddings/{w}/posts/{p}', async (event) => {
+  const { w, p } = event.params;
+  await getStorage().bucket().deleteFiles({ prefix: `weddings/${w}/posts/${p}/` }).catch(() => undefined);
+  await db().recursiveDelete(db().collection(`weddings/${w}/posts/${p}/likes`));
+  await db().recursiveDelete(db().collection(`weddings/${w}/posts/${p}/comments`));
 });
 
 // ------------------------------------------------------------------

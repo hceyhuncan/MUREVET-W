@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../data/repositories/auth_repository.dart';
+import '../data/repositories/memories_repository.dart';
 import '../data/repositories/program_repository.dart';
+import '../data/services/media_picker.dart';
 import '../data/repositories/wedding_repository.dart';
 import '../domain/models/membership.dart';
 import '../l10n/gen/app_localizations.dart';
@@ -18,11 +20,20 @@ import 'features/weddings/my_weddings_view.dart';
 import 'features/weddings/pending_view.dart';
 
 class MurevetApp extends StatefulWidget {
-  const MurevetApp({super.key, required this.auth, required this.weddings, required this.program});
+  const MurevetApp({
+    super.key,
+    required this.auth,
+    required this.weddings,
+    required this.program,
+    required this.memories,
+    required this.picker,
+  });
 
   final AuthRepository auth;
   final WeddingRepository weddings;
   final ProgramRepository program;
+  final MemoriesRepository memories;
+  final MediaPicker picker;
 
   @override
   State<MurevetApp> createState() => _MurevetAppState();
@@ -57,6 +68,8 @@ class _MurevetAppState extends State<MurevetApp> {
             membership: widget.weddings.watchMembership(id, uid),
             uid: uid,
             program: widget.program,
+            memories: widget.memories,
+            picker: widget.picker,
           );
         },
       ),

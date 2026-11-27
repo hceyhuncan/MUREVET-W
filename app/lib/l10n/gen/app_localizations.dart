@@ -62,7 +62,8 @@ import 'app_localizations_tr.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,7 +71,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -82,15 +84,19 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('tr')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('tr'),
+  ];
 
   /// No description provided for @appName.
   ///
@@ -565,9 +571,202 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kaydedilemedi. Bölüm kapanmış olabilir.'**
   String get saveFailed;
+
+  /// No description provided for @noMemories.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz anı paylaşılmadı. İlk fotoğrafı siz ekleyin.'**
+  String get noMemories;
+
+  /// No description provided for @addMemory.
+  ///
+  /// In tr, this message translates to:
+  /// **'Anı ekle'**
+  String get addMemory;
+
+  /// No description provided for @uploadClosed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yükleme süresi doldu. Paylaşılan anılar burada kalmaya devam eder.'**
+  String get uploadClosed;
+
+  /// No description provided for @captionHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Açıklama (isteğe bağlı)'**
+  String get captionHint;
+
+  /// No description provided for @share.
+  ///
+  /// In tr, this message translates to:
+  /// **'Paylaş'**
+  String get share;
+
+  /// No description provided for @uploading.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yükleniyor… %{percent}'**
+  String uploading(int percent);
+
+  /// No description provided for @uploadDone.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} anı paylaşıldı.'**
+  String uploadDone(int count);
+
+  /// No description provided for @uploadFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yüklenemedi. Yükleme süresi dolmuş olabilir.'**
+  String get uploadFailed;
+
+  /// No description provided for @fileTooLarge.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bazı dosyalar atlandı: fotoğraf en fazla 15 MB, video en fazla 150 MB olabilir.'**
+  String get fileTooLarge;
+
+  /// No description provided for @selectedCount.
+  ///
+  /// In tr, this message translates to:
+  /// **'{count} dosya seçildi'**
+  String selectedCount(int count);
+
+  /// No description provided for @comments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yorumlar'**
+  String get comments;
+
+  /// No description provided for @noComments.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz yorum yok.'**
+  String get noComments;
+
+  /// No description provided for @writeComment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yorum yazın'**
+  String get writeComment;
+
+  /// No description provided for @like.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beğen'**
+  String get like;
+
+  /// No description provided for @report.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şikayet et'**
+  String get report;
+
+  /// No description provided for @reportTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Neden şikayet ediyorsunuz?'**
+  String get reportTitle;
+
+  /// No description provided for @reasonInappropriate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Uygunsuz içerik'**
+  String get reasonInappropriate;
+
+  /// No description provided for @reasonHarassment.
+  ///
+  /// In tr, this message translates to:
+  /// **'Taciz veya zorbalık'**
+  String get reasonHarassment;
+
+  /// No description provided for @reasonNudity.
+  ///
+  /// In tr, this message translates to:
+  /// **'Çıplaklık'**
+  String get reasonNudity;
+
+  /// No description provided for @reasonCopyright.
+  ///
+  /// In tr, this message translates to:
+  /// **'Telif hakkı'**
+  String get reasonCopyright;
+
+  /// No description provided for @reasonOther.
+  ///
+  /// In tr, this message translates to:
+  /// **'Diğer'**
+  String get reasonOther;
+
+  /// No description provided for @reportSent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Şikayetiniz düğün sahibine iletildi.'**
+  String get reportSent;
+
+  /// No description provided for @blockUser.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kişiyi engelle'**
+  String get blockUser;
+
+  /// No description provided for @blockConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} engellensin mi? Paylaşımlarını ve yorumlarını artık görmezsiniz.'**
+  String blockConfirm(String name);
+
+  /// No description provided for @blocked.
+  ///
+  /// In tr, this message translates to:
+  /// **'Engellendi.'**
+  String get blocked;
+
+  /// No description provided for @hide.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizle'**
+  String get hide;
+
+  /// No description provided for @unhide.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tekrar göster'**
+  String get unhide;
+
+  /// No description provided for @hiddenBadge.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gizli (sadece siz görüyorsunuz)'**
+  String get hiddenBadge;
+
+  /// No description provided for @deletePostConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu anı silinsin mi? Bu işlem geri alınamaz.'**
+  String get deletePostConfirm;
+
+  /// No description provided for @deleteCommentConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu yorum silinsin mi?'**
+  String get deleteCommentConfirm;
+
+  /// No description provided for @videoLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Video'**
+  String get videoLabel;
+
+  /// No description provided for @mediaUnavailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Medya yüklenemedi'**
+  String get mediaUnavailable;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -576,7 +775,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'tr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'tr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

@@ -1,5 +1,5 @@
 import { assertFails, assertSucceeds, initializeTestEnvironment, RulesTestEnvironment } from '@firebase/rules-unit-testing';
-import { deleteDoc, doc, getDoc, serverTimestamp, setDoc, Timestamp, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, serverTimestamp, setDoc, Timestamp, updateDoc, where } from 'firebase/firestore';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
@@ -172,6 +172,28 @@ describe('Modül B: Anı Paylaşımı', () => {
     await assertSucceeds(setDoc(doc(as('guest'), `weddings/${W}/reports/r1`), { reporterUid: 'guest', targetType: 'post', targetId: 'p1', reason: 'inappropriate', createdAt: serverTimestamp() }));
     await assertFails(getDoc(doc(as('guest'), `weddings/${W}/reports/r1`)));
     await assertSucceeds(getDoc(doc(as('owner'), `weddings/${W}/reports/r1`)));
+  });
+});
+
+describe('Modül B: uygulamanın sorguları', () => {
+  test('davetli akışı sadece görünen gönderilerle sorgular; filtresiz sorgu reddedilir', async () => {
+    await seed();
+    const db = as('guest');
+    const posts = collection(db, `weddings/${W}/posts`);
+    await assertSucceeds(getDocs(query(posts, where('status', '==', 'visible'), orderBy('createdAt', 'desc'))));
+    await assertFails(getDocs(query(posts, orderBy('createdAt', 'desc'))));
+    await assertSucceeds(getDocs(query(collection(as('owner'), `weddings/${W}/posts`), orderBy('createdAt', 'desc'))));
+  });
+  test('davetli yorumları görünenlerle sorgular', async () => {
+    await seed();
+    const c = collection(as('guest'), `weddings/${W}/posts/p1/comments`);
+    await assertSucceeds(getDocs(query(c, where('status', '==', 'visible'), orderBy('createdAt'))));
+  });
+  test('engelleme listesi sadece kullanıcıya ait', async () => {
+    await seed();
+    await assertSucceeds(setDoc(doc(as('guest'), 'users/guest/blocks/owner'), { createdAt: serverTimestamp() }));
+    await assertFails(setDoc(doc(as('guest'), 'users/guest/blocks/guest'), { createdAt: serverTimestamp() }));
+    await assertFails(getDocs(collection(as('owner'), 'users/guest/blocks')));
   });
 });
 

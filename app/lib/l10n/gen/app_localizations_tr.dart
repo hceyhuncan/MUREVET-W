@@ -41,7 +41,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get codeHint => 'Örn. ABC D234';
 
   @override
-  String get codeInvalidFormat => 'Kod 7 veya 10 karakter olmalı ve sadece harf ve rakam içermeli.';
+  String get codeInvalidFormat =>
+      'Kod 7 veya 10 karakter olmalı ve sadece harf ve rakam içermeli.';
 
   @override
   String get nameLabel => 'Adınız soyadınız';
@@ -65,7 +66,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get errorCodeNotFound => 'Bu kod geçersiz veya artık kullanılmıyor.';
 
   @override
-  String get errorTooManyAttempts => 'Çok fazla hatalı deneme yaptınız. Lütfen bir saat sonra tekrar deneyin.';
+  String get errorTooManyAttempts =>
+      'Çok fazla hatalı deneme yaptınız. Lütfen bir saat sonra tekrar deneyin.';
 
   @override
   String get errorWeddingClosed => 'Bu düğün şu an erişime kapalı.';
@@ -86,7 +88,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get pendingTitle => 'Onay bekleniyor';
 
   @override
-  String get pendingBody => 'Düğün sahibi katılımınızı onayladığında içeri girebilirsiniz.';
+  String get pendingBody =>
+      'Düğün sahibi katılımınızı onayladığında içeri girebilirsiniz.';
 
   @override
   String get roleOwner => 'Sahip';
@@ -236,10 +239,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get rotateCode => 'Kodu yenile';
 
   @override
-  String get rotateCodeConfirm => 'Yeni kod oluşturulunca eski kod çalışmaz. Daha önce katılanlar etkilenmez.';
+  String get rotateCodeConfirm =>
+      'Yeni kod oluşturulunca eski kod çalışmaz. Daha önce katılanlar etkilenmez.';
 
   @override
-  String get shareCodeHint => 'Bu kodu davetiye ve masalara koyun. Davetliler uygulamada \"Kodum var\" ile girer.';
+  String get shareCodeHint =>
+      'Bu kodu davetiye ve masalara koyun. Davetliler uygulamada \"Kodum var\" ile girer.';
 
   @override
   String rsvpSummary(int yes, int no, int maybe, int none) {
@@ -251,4 +256,110 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get saveFailed => 'Kaydedilemedi. Bölüm kapanmış olabilir.';
+
+  @override
+  String get noMemories => 'Henüz anı paylaşılmadı. İlk fotoğrafı siz ekleyin.';
+
+  @override
+  String get addMemory => 'Anı ekle';
+
+  @override
+  String get uploadClosed =>
+      'Yükleme süresi doldu. Paylaşılan anılar burada kalmaya devam eder.';
+
+  @override
+  String get captionHint => 'Açıklama (isteğe bağlı)';
+
+  @override
+  String get share => 'Paylaş';
+
+  @override
+  String uploading(int percent) {
+    return 'Yükleniyor… %$percent';
+  }
+
+  @override
+  String uploadDone(int count) {
+    return '$count anı paylaşıldı.';
+  }
+
+  @override
+  String get uploadFailed => 'Yüklenemedi. Yükleme süresi dolmuş olabilir.';
+
+  @override
+  String get fileTooLarge =>
+      'Bazı dosyalar atlandı: fotoğraf en fazla 15 MB, video en fazla 150 MB olabilir.';
+
+  @override
+  String selectedCount(int count) {
+    return '$count dosya seçildi';
+  }
+
+  @override
+  String get comments => 'Yorumlar';
+
+  @override
+  String get noComments => 'Henüz yorum yok.';
+
+  @override
+  String get writeComment => 'Yorum yazın';
+
+  @override
+  String get like => 'Beğen';
+
+  @override
+  String get report => 'Şikayet et';
+
+  @override
+  String get reportTitle => 'Neden şikayet ediyorsunuz?';
+
+  @override
+  String get reasonInappropriate => 'Uygunsuz içerik';
+
+  @override
+  String get reasonHarassment => 'Taciz veya zorbalık';
+
+  @override
+  String get reasonNudity => 'Çıplaklık';
+
+  @override
+  String get reasonCopyright => 'Telif hakkı';
+
+  @override
+  String get reasonOther => 'Diğer';
+
+  @override
+  String get reportSent => 'Şikayetiniz düğün sahibine iletildi.';
+
+  @override
+  String get blockUser => 'Kişiyi engelle';
+
+  @override
+  String blockConfirm(String name) {
+    return '$name engellensin mi? Paylaşımlarını ve yorumlarını artık görmezsiniz.';
+  }
+
+  @override
+  String get blocked => 'Engellendi.';
+
+  @override
+  String get hide => 'Gizle';
+
+  @override
+  String get unhide => 'Tekrar göster';
+
+  @override
+  String get hiddenBadge => 'Gizli (sadece siz görüyorsunuz)';
+
+  @override
+  String get deletePostConfirm => 'Bu anı silinsin mi? Bu işlem geri alınamaz.';
+
+  @override
+  String get deleteCommentConfirm => 'Bu yorum silinsin mi?';
+
+  @override
+  String get videoLabel => 'Video';
+
+  @override
+  String get mediaUnavailable => 'Medya yüklenemedi';
 }

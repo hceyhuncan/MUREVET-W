@@ -8,7 +8,7 @@ import 'package:murevet/ui/app.dart';
 import 'fakes.dart';
 
 Future<void> pumpApp(WidgetTester t, FakeAuth auth, FakeWeddings w) async {
-  await t.pumpWidget(MurevetApp(auth: auth, weddings: w, program: FakeProgram()));
+  await t.pumpWidget(MurevetApp(auth: auth, weddings: w, program: FakeProgram(), memories: FakeMemories(), picker: FakePicker()));
   await t.pumpAndSettle();
 }
 
