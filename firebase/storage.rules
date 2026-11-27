@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// Murevet Storage kuralları (PROTOTİP, gözden geçirilmeli)
+// Yol: weddings/{w}/posts/{p}/{file}   (gönderi medyası)
+//      weddings/{w}/cover/{file}        (kapak, yalnız sunucu yazar)
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() { return request.auth != null; }
+    function memberPath(w) {
+      return /databases/(default)/documents/weddings/$(w)/members/$(request.auth.uid);
+    }
+    function weddingPath(w) { return /databases/(default)/documents/weddings/$(w); }
+    function isMember(w) {
+      return signedIn() && firestore.exists(memberPath(w))
+        && firestore.get(memberPath(w)).data.status == 'active';
+    }
+    function uploadOpen(w) {
+      let wd = firestore.get(weddingPath(w)).data;
+      let m = wd.modules.paylasim;
+      return wd.status == 'active' && m.enabled == true
+        && request.time >= m.uploadStart && request.time <= m.uploadEnd;
+    }
+    function validMedia() {
+      return (request.resource.contentType.matches('image/.*') && request.resource.size <= 15 * 1024 * 1024)
+          || (request.resource.contentType.matches('video/.*') && request.resource.size <= 150 * 1024 * 1024);
+    }
+
+    match /weddings/{w}/posts/{p}/{file} {
+      allow read: if isMember(w);
+      // Yükleyen kişi yalnızca yeni dosya oluşturur, üzerine yazamaz
+      allow create: if isMember(w) && uploadOpen(w) && validMedia()
+        && request.resource.metadata.uploaderUid == request.auth.uid;
+      allow delete: if isMember(w) && resource.metadata.uploaderUid == request.auth.uid;
+    }
+
+    match /weddings/{w}/cover/{file} {
+      allow read: if isMember(w);
+    }
+  }
+}
