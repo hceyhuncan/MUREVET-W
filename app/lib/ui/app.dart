@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../data/repositories/auth_repository.dart';
+import '../data/repositories/program_repository.dart';
 import '../data/repositories/wedding_repository.dart';
 import '../domain/models/membership.dart';
 import '../l10n/gen/app_localizations.dart';
@@ -17,10 +18,11 @@ import 'features/weddings/my_weddings_view.dart';
 import 'features/weddings/pending_view.dart';
 
 class MurevetApp extends StatefulWidget {
-  const MurevetApp({super.key, required this.auth, required this.weddings});
+  const MurevetApp({super.key, required this.auth, required this.weddings, required this.program});
 
   final AuthRepository auth;
   final WeddingRepository weddings;
+  final ProgramRepository program;
 
   @override
   State<MurevetApp> createState() => _MurevetAppState();
@@ -29,7 +31,10 @@ class MurevetApp extends StatefulWidget {
 class _MurevetAppState extends State<MurevetApp> {
   late final GoRouter _router = GoRouter(
     routes: [
-      GoRoute(path: '/', builder: (c, s) => _Root(auth: widget.auth, weddings: widget.weddings)),
+      GoRoute(
+        path: '/',
+        builder: (c, s) => _Root(auth: widget.auth, weddings: widget.weddings),
+      ),
       // Bağlantı: /join?code=ABCD234 (QR ve paylaşılan bağlantılar buraya açılır)
       GoRoute(
         path: '/join',
@@ -44,7 +49,16 @@ class _MurevetAppState extends State<MurevetApp> {
       GoRoute(
         path: '/w/:id',
         redirect: (c, s) => widget.auth.currentUser == null ? '/' : null,
-        builder: (c, s) => WeddingHomeView(wedding: widget.weddings.watchWedding(s.pathParameters['id']!)),
+        builder: (c, s) {
+          final id = s.pathParameters['id']!;
+          final uid = widget.auth.currentUser!.uid;
+          return WeddingHomeView(
+            wedding: widget.weddings.watchWedding(id),
+            membership: widget.weddings.watchMembership(id, uid),
+            uid: uid,
+            program: widget.program,
+          );
+        },
       ),
       GoRoute(
         path: '/w/:id/pending',
@@ -54,7 +68,10 @@ class _MurevetAppState extends State<MurevetApp> {
           membership: widget.weddings.watchMembership(s.pathParameters['id']!, widget.auth.currentUser!.uid),
         ),
       ),
-      GoRoute(path: '/settings', builder: (c, s) => SettingsView(auth: widget.auth)),
+      GoRoute(
+        path: '/settings',
+        builder: (c, s) => SettingsView(auth: widget.auth),
+      ),
     ],
   );
 

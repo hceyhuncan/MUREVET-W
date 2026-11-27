@@ -6,6 +6,7 @@ import 'package:material_ui/material_ui.dart';
 
 import 'config/firebase_config.dart';
 import 'data/services/firebase_auth_repository.dart';
+import 'data/services/firestore_program_repository.dart';
 import 'data/services/firestore_wedding_repository.dart';
 import 'ui/app.dart';
 
@@ -18,8 +19,11 @@ Future<void> main() async {
     FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
     functions.useFunctionsEmulator(emulatorHost, 5001);
   }
-  runApp(MurevetApp(
-    auth: FirebaseAuthRepository(functions: functions),
-    weddings: FirestoreWeddingRepository(functions: functions),
-  ));
+  runApp(
+    MurevetApp(
+      auth: FirebaseAuthRepository(functions: functions),
+      weddings: FirestoreWeddingRepository(functions: functions),
+      program: FirestoreProgramRepository(functions: functions),
+    ),
+  );
 }
