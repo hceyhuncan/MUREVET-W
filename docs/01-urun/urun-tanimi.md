@@ -1,9 +1,10 @@
 # Ürün Tanımı: Murevet
-Sürüm: v0.4 · Tarih: 2026-11-27 · Durum: Taslak (Kapı 1 onayı bekliyor) · Hazırlayan: urun-stratejisti
+Sürüm: v1.0 · Tarih: 2026-11-27 · Durum: Kapı 1 onaylandı (Can, 2026-11-27) · Hazırlayan: urun-stratejisti
 
 > Bu doküman pazar araştırmasından önce yazıldı. Rakip ve fiyat bilgileri `TAHMİN:` etiketli; `docs/02-pazar/pazar-raporu.md` çıktıktan sonra güncellenecek.
 >
 > v0.2: paralel yazılan iki taslak (PR #2 ve #3) birleştirildi ve Can'ın 2026-11-27 kararları işlendi.
+> v1.0: Kapı 1 kararları tamamlandı. Uygulama dışı hizmet yok; düğün sonrası davetliler içeriğe bulut üzerinden erişmeye devam eder. İlk geliştirme dalgası: ön modül, A. Katılımcı Organizasyonu, B. Anı Paylaşımı ve yönetim paneli. Diğer modüller sonra kararlaştırılacak.
 > v0.4: Can'ın satış modeli işlendi: uygulama içi satış yok, ofiste sözleşmeli modül paketleri, süreli modüller, kodsuz kullanıcı için ön modül ve Lotus yönetim paneli eklendi.
 > v0.3: pazar raporu (`docs/02-pazar/pazar-raporu.md`) eklendi; fiyatlar ve rakip bilgisi güncellendi. **En büyük risk:** rakiplerin çoğu uygulama indirmeden tarayıcıdan katılım sunuyor; Murevet'in uygulama + kod modeli ayrıcalık sağlar ama katılımı düşürebilir. Kapalı testte ölçülecek.
 
@@ -65,7 +66,7 @@ MVP yalnızca **Must** satırlarını içerir. Hedef: tek mobil geliştirici + a
 | M6 | **Paylaşım:** galeriden çoklu fotoğraf (en fazla 20) ve kısa video (en fazla 60 sn) seçip yükleme, isteğe bağlı açıklama, etkinlik seçimi | 3 | Android Fotoğraf Seçici kullanılır (geniş medya izni yok). Arka planda yükleme, kesilirse devam. Uygulama içi kamera Should. |
 | M7 | **Düğün akışı:** ters kronolojik akış, etkinliğe göre filtre, tam ekran görüntüleme | 4 | Sadece düğün üyeleri görür. |
 | M8 | **Beğeni ve yorum** | 4 | Yorumlar düz metin, tek seviye. |
-| M9 | **Toplu indirme:** düğün sahibi tüm medyayı orijinal kalitede indirir | 5 | MVP'de sunucuda ZIP hazırlanıp indirme bağlantısı verilir (TAHMİN: Cloud Function). |
+| M9 | **(C. Arşiv modülüne taşındı, sonra karar)** Toplu indirme: düğün sahibi tüm medyayı orijinal kalitede indirir | 5 | MVP'de sunucuda ZIP hazırlanıp indirme bağlantısı verilir (TAHMİN: Cloud Function). |
 | M10 | **Roller ve erişim kontrolü:** sahip (çift, en fazla 2 kişi), davetli; isteğe bağlı **katılım onayı** (sahip açarsa kodla gelen herkes onay bekler); davetli listesi ve çıkarma | 6 | Sahip ikinci sahibi (eşini) davet eder. Ayrıcalık için katılım onayı varsayılan olarak açık önerilir (VARSAYIM). |
 | M11 | **Moderasyon (Play UGC zorunlu):** paylaşmadan önce içerik kurallarını kabul, her gönderi/yorumda şikayet, kullanıcı engelleme, sahip için gizleme/kaldırma ve kişiyi düğünden çıkarma, şikayet kuyruğu | 6, 7 | `ugc-moderasyon` skill'i. Kuyruk MVP'de Firestore koleksiyonu + e-posta bildirimi. |
 | M12 | **Bildirimler:** yeni paylaşım özeti (toplu, saatte en fazla 1), yoruma yanıt, etkinlik hatırlatması (1 gün önce) | 2, 4 | FCM. Bildirim izni Android 13+ çalışma zamanında istenir. |
@@ -131,11 +132,11 @@ Bu model ürünü düşük fiyatlı bir uygulama olmaktan çıkarıp **premium b
 | Modül | İçerik | Varsayılan açık kalma (VARSAYIM) |
 |---|---|---|
 | **A. Katılımcı Organizasyonu** | Davetli listesi ve kodla katılım, LCV (katılıyorum/katılamıyorum, kişi sayısı), etkinlik programı, konum ve harita, duyurular ve bildirimler, masa/oturma bilgisi | Sözleşmeden etkinlik sonuna kadar |
-| **B. Anı Paylaşımı** | Fotoğraf/video yükleme, düğün akışı, beğeni ve yorum, etkinliğe göre filtre | Yükleme etkinlik günü; görüntüleme sonrasında belirli bir süre |
-| **C. Arşiv** | Tüm medyayı orijinal kalitede toplu indirme, saklama süresi | Etkinlikten sonra sözleşmedeki süre (ör. 1 yıl) |
-| **D. Canlı Ekran** (Should) | Salondaki ekranda onaylı paylaşımların canlı slaytı | Etkinlik günü |
-| **E. Girişte QR kontrol** (Should) | Davetlinin salon girişinde kodunun/QR'ının okutulması, katılım sayımı | Etkinlik günü |
-| **F. Anı Defteri** (Could) | Yazılı/sesli tebrik mesajları | Etkinlik günü + sonrası |
+| **B. Anı Paylaşımı** | Fotoğraf/video yükleme, düğün akışı, beğeni ve yorum, etkinliğe göre filtre | Yükleme etkinlik günü; **düğün sonrası davetliler buluttan görüntülemeye devam eder** (KARAR) |
+| **C. Arşiv** (sonra karar) | Tüm medyayı orijinal kalitede toplu indirme, saklama süresi | Etkinlikten sonra sözleşmedeki süre (ör. 1 yıl) |
+| **D. Canlı Ekran** (sonra karar) | Salondaki ekranda onaylı paylaşımların canlı slaytı | Etkinlik günü |
+| **E. Girişte QR kontrol** (sonra karar) | Davetlinin salon girişinde kodunun/QR'ının okutulması, katılım sayımı | Etkinlik günü |
+| **F. Anı Defteri** (sonra karar) | Yazılı/sesli tebrik mesajları | Etkinlik günü + sonrası |
 
 Kimlik, profil, moderasyon, hesap silme ve yasal ekranlar her pakette ortak çekirdektir.
 
@@ -165,11 +166,11 @@ Kimlik, profil, moderasyon, hesap silme ve yasal ekranlar her pakette ortak çek
 - [x] **1. Konumlandırma:** Kapalı, kodla erişilen düğün alanı (Can, 2026-11-27).
 - [x] **2. Kim öder:** Yalnızca düğün sahipleri (Can, 2026-11-27).
 - [x] **2a. Satış modeli:** Ofiste sözleşme + modül paketi, uygulama içi satış yok (Can, 2026-11-27).
-- [ ] **2b. Modül listesi:** §7.1'deki A-F modülleri ve varsayılan açık kalma süreleri doğru mu? Eksik bir hizmet var mı (ör. salonda personel, ekran kurulumu gibi uygulama dışı hizmetler pakete dahil mi)?
-- [ ] **2c. Paylaşım süresi:** Etkinlik bitince davetliler fotoğrafları görmeye devam etsin mi (ör. 30 gün), yoksa sadece çift arşive mi erişsin?
+- [x] **2b. Modül listesi:** Uygulama dışı hizmet yok. İlk dalga: ön modül + A + B + yönetim paneli; C-F sonra (Can, 2026-11-27).
+- [x] **2c. Paylaşım süresi:** Düğün sonrası davetliler buluttan erişmeye devam eder (Can, 2026-11-27).
 - [x] **3. Play geliştirici hesabı:** Kurumsal, Lotus Sport Teknoloji (Can, 2026-11-27).
 - [x] **3a.** Murevet, Exereyes ile aynı şirket Play hesabından yayınlanacak (Can, 2026-11-27).
-- [ ] **4. Teknoloji:** Flutter + Firebase önerisi (`docs/kararlar/001-teknoloji.md`). Kapı 2'de resmî onay; itirazın yoksa tasarım aşaması bu varsayımla ilerler.
+- [ ] **4. Teknoloji:** Flutter + Firebase (`docs/kararlar/001-teknoloji.md`). Can geliştirmeye başlanmasını istedi; bu varsayımla ilerleniyor, itiraz gelmezse Kapı 2'de kabul edilir.
 - [ ] **5. Pazar:** Türkiye öncelikli, yurt dışındaki Türk toplulukları (Almanya, Hollanda vb.) ikincil hedef. Onay.
 
 ## Sonraki adımlar
