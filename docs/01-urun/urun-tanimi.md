@@ -1,9 +1,10 @@
 # Ürün Tanımı: Murevet
-Sürüm: v0.2 · Tarih: 2026-11-27 · Durum: Taslak (Kapı 1 onayı bekliyor) · Hazırlayan: urun-stratejisti
+Sürüm: v0.3 · Tarih: 2026-11-27 · Durum: Taslak (Kapı 1 onayı bekliyor) · Hazırlayan: urun-stratejisti
 
 > Bu doküman pazar araştırmasından önce yazıldı. Rakip ve fiyat bilgileri `TAHMİN:` etiketli; `docs/02-pazar/pazar-raporu.md` çıktıktan sonra güncellenecek.
 >
 > v0.2: paralel yazılan iki taslak (PR #2 ve #3) birleştirildi ve Can'ın 2026-11-27 kararları işlendi.
+> v0.3: pazar raporu (`docs/02-pazar/pazar-raporu.md`) eklendi; fiyatlar ve rakip bilgisi güncellendi. **En büyük risk:** rakiplerin çoğu uygulama indirmeden tarayıcıdan katılım sunuyor; Murevet'in uygulama + kod modeli ayrıcalık sağlar ama katılımı düşürebilir. Kapalı testte ölçülecek.
 
 ## Can'ın kararları (2026-11-27)
 | Konu | Karar |
@@ -121,12 +122,12 @@ VARSAYIM: Düğünlük bir ürün olduğu için "haftalık aktif kullanıcı" an
 ### Öneri: düğün başına tek seferlik paket
 Ödeme düğün oluşturulurken veya düğün dolmaya başladığında, sahibin telefonundan bir kez yapılır. Paket o düğüne aittir.
 
-| Paket | Kime | Davetli | Medya / depolama | Video | Saklama | Toplu indirme | Fiyat (TAHMİN, DOĞRULA) |
+| Paket | Kime | Davetli | Medya / depolama | Video | Saklama | Toplu indirme | Fiyat (TAHMİN, pazar raporuna göre) |
 |---|---|---|---|---|---|---|---|
 | **Deneme** (ücretsiz) | Denemek isteyen çift | 30 | 300 medya | 15 sn | 30 gün | Hayır | 0 TL |
-| **Davet** | Küçük düğün, kına, nişan | 150 | 3.000 medya | 60 sn | 1 yıl | Evet | ~500-700 TL |
-| **Salon** | Ortalama Türk düğünü | 500 | 10.000 medya | 60 sn | 2 yıl | Evet + öne çıkanlar albümü | ~1.000-1.500 TL |
-| **Saray** | Büyük düğün, birden çok etkinlik | Sınırsız | Sınırsız (adil kullanım) | 3 dk | 5 yıl | Evet + öncelikli destek | ~2.000-3.000 TL |
+| **Davet** | Küçük düğün, kına, nişan | 150 | 3.000 medya | 60 sn | 1 yıl | Evet | ~499 TL |
+| **Salon** | Ortalama Türk düğünü | 500 | 10.000 medya | 60 sn | 2 yıl | Evet + öne çıkanlar albümü | ~999 TL |
+| **Saray** | Büyük düğün, birden çok etkinlik | Sınırsız | Sınırsız (adil kullanım) | 3 dk | 5 yıl | Evet + öncelikli destek | ~1.999 TL |
 
 Neden bu yapı:
 - Paketi **davetli sayısına** bağlamak çiftin anladığı bir ölçü (salon, davetiye sayısı gibi) ve maliyetle (depolama) doğru orantılı.
