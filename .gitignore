@@ -1,0 +1,11 @@
+# Gizli bilgiler
+*.jks
+*.keystore
+key.properties
+.env*
+google-services.json
+GoogleService-Info.plist
+# Araçlar
+.scratch/
+.dart_tool/
+build/
