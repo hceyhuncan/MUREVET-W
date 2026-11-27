@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:murevet/data/repositories/auth_repository.dart';
+import 'package:murevet/data/repositories/memories_repository.dart';
 import 'package:murevet/data/repositories/program_repository.dart';
+import 'package:murevet/data/services/media_picker.dart';
+import 'package:murevet/domain/models/memories.dart';
 import 'package:murevet/domain/models/program.dart';
 import 'package:murevet/data/repositories/wedding_repository.dart';
 import 'package:murevet/domain/models/join_result.dart';
@@ -62,6 +65,7 @@ class FakeWeddings implements WeddingRepository {
     if (m != null) yield m;
     yield* membershipCtrl.stream;
   }
+
   @override
   Stream<Wedding?> watchWedding(String weddingId) => Stream.value(wedding);
   @override
@@ -179,5 +183,131 @@ class FakeProgram implements ProgramRepository {
     guestCode = 'NEWC234';
     _changed();
     return guestCode;
+  }
+}
+
+class FakePicker implements MediaPicker {
+  List<PickedMedia> next = [];
+  @override
+  Future<List<PickedMedia>> pick() async => next;
+}
+
+class FakeMemories implements MemoriesRepository {
+  final posts = <Post>[];
+  final comments = <String, List<PostComment>>{};
+  final likes = <String>{};
+  final blocked = <String>{};
+  final reports = <(ReportTarget, String, ReportReason)>[];
+  final uploads = <(List<PickedMedia>, String?)>[];
+  final _tick = StreamController<void>.broadcast();
+
+  Stream<T> _watch<T>(T Function() read) async* {
+    yield read();
+    await for (final _ in _tick.stream) {
+      yield read();
+    }
+  }
+
+  void _changed() => _tick.add(null);
+
+  Post _copy(Post p, {bool? hidden}) => Post(
+    id: p.id,
+    authorUid: p.authorUid,
+    authorName: p.authorName,
+    mediaPath: p.mediaPath,
+    mediaType: p.mediaType,
+    createdAt: p.createdAt,
+    caption: p.caption,
+    isHidden: hidden ?? p.isHidden,
+    likeCount: p.likeCount,
+    commentCount: p.commentCount,
+  );
+
+  @override
+  Stream<List<Post>> watchPosts(String w, {required bool includeHidden}) =>
+      _watch(() => posts.where((p) => includeHidden || !p.isHidden).toList());
+  @override
+  Future<String?> mediaUrl(String path) async => null;
+  @override
+  Future<void> upload(
+    String w,
+    String uid,
+    List<PickedMedia> media, {
+    String? caption,
+    void Function(double progress)? onProgress,
+  }) async {
+    uploads.add((media, caption));
+    for (final m in media) {
+      posts.insert(
+        0,
+        Post(
+          id: 'p${posts.length + 1}',
+          authorUid: uid,
+          authorName: 'Ben',
+          mediaPath: 'weddings/$w/posts/x/${m.name}',
+          mediaType: m.type!,
+          createdAt: DateTime.now(),
+          caption: caption,
+        ),
+      );
+    }
+    onProgress?.call(1);
+    _changed();
+  }
+
+  @override
+  Future<void> setPostHidden(String w, String id, {required bool hidden}) async {
+    final i = posts.indexWhere((p) => p.id == id);
+    posts[i] = _copy(posts[i], hidden: hidden);
+    _changed();
+  }
+
+  @override
+  Future<void> deletePost(String w, Post post) async {
+    posts.removeWhere((p) => p.id == post.id);
+    _changed();
+  }
+
+  @override
+  Stream<bool> watchLiked(String w, String p, String uid) => _watch(() => likes.contains('$p/$uid'));
+  @override
+  Future<void> setLiked(String w, String p, String uid, {required bool liked}) async {
+    liked ? likes.add('$p/$uid') : likes.remove('$p/$uid');
+    _changed();
+  }
+
+  @override
+  Stream<List<PostComment>> watchComments(String w, String p, {required bool includeHidden}) =>
+      _watch(() => (comments[p] ?? []).where((c) => includeHidden || !c.isHidden).toList());
+  @override
+  Future<void> addComment(String w, String p, String uid, String text) async {
+    (comments[p] ??= []).add(
+      PostComment(
+        id: 'c${comments[p]!.length + 1}',
+        authorUid: uid,
+        authorName: 'Ben',
+        text: text,
+        createdAt: DateTime.now(),
+      ),
+    );
+    _changed();
+  }
+
+  @override
+  Future<void> setCommentHidden(String w, String p, String c, {required bool hidden}) async {}
+  @override
+  Future<void> deleteComment(String w, String p, String c) async {
+    comments[p]?.removeWhere((x) => x.id == c);
+    _changed();
+  }
+
+  @override
+  Future<void> report(String w, String uid, ReportTarget t, String id, ReportReason r) async => reports.add((t, id, r));
+  @override
+  Stream<Set<String>> watchBlocked(String uid) => _watch(() => Set.of(blocked));
+  @override
+  Future<void> block(String uid, String other) async {
+    blocked.add(other);
+    _changed();
   }
 }

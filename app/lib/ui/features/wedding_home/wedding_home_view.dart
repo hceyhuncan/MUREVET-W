@@ -1,13 +1,15 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../../../data/repositories/memories_repository.dart';
 import '../../../data/repositories/program_repository.dart';
+import '../../../data/services/media_picker.dart';
 import '../../../domain/models/membership.dart';
 import '../../../domain/models/wedding.dart';
 import '../../../l10n/gen/app_localizations.dart';
+import '../memories/memories_view.dart';
 import '../program/program_view.dart';
 
 /// Düğün ana ekranı: sadece sözleşmede açılan modüllerin sekmeleri görünür.
-/// B (Anılar) içeriği sonraki PR'da eklenecek.
 class WeddingHomeView extends StatelessWidget {
   const WeddingHomeView({
     super.key,
@@ -15,6 +17,8 @@ class WeddingHomeView extends StatelessWidget {
     required this.membership,
     required this.uid,
     required this.program,
+    required this.memories,
+    required this.picker,
     DateTime Function()? clock,
   }) : _clock = clock ?? DateTime.now;
 
@@ -22,6 +26,8 @@ class WeddingHomeView extends StatelessWidget {
   final Stream<Membership?> membership;
   final String uid;
   final ProgramRepository program;
+  final MemoriesRepository memories;
+  final MediaPicker picker;
   final DateTime Function() _clock;
 
   @override
@@ -55,7 +61,18 @@ class WeddingHomeView extends StatelessWidget {
                   repo: program,
                 ),
               ),
-            if (w.paylasimEnabled) (l.tabMemories, const _ModulePlaceholder(open: true)),
+            if (w.paylasimEnabled)
+              (
+                l.tabMemories,
+                MemoriesView(
+                  weddingId: w.id,
+                  uid: uid,
+                  isOwner: m.isOwner,
+                  canUpload: w.isActive && w.paylasimUpload.isOpenAt(_clock()),
+                  repo: memories,
+                  picker: picker,
+                ),
+              ),
           ];
           return DefaultTabController(
             length: tabs.length,
@@ -74,16 +91,5 @@ class WeddingHomeView extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class _ModulePlaceholder extends StatelessWidget {
-  const _ModulePlaceholder({required this.open});
-  final bool open;
-
-  @override
-  Widget build(BuildContext context) {
-    final l = AppLocalizations.of(context);
-    return Center(child: Text(open ? l.comingSoon : l.moduleClosed));
   }
 }

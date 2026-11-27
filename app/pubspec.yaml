@@ -46,6 +46,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_ui: ^1.1.7
+  firebase_storage: ^14.1.0
+  image_picker: ^1.2.4
+  video_player: ^2.14.1
 
 dev_dependencies:
   flutter_test:

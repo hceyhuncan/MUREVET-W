@@ -41,7 +41,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codeHint => 'e.g. ABC D234';
 
   @override
-  String get codeInvalidFormat => 'The code must be 7 or 10 letters and digits.';
+  String get codeInvalidFormat =>
+      'The code must be 7 or 10 letters and digits.';
 
   @override
   String get nameLabel => 'Your full name';
@@ -65,7 +66,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorCodeNotFound => 'This code is invalid or no longer in use.';
 
   @override
-  String get errorTooManyAttempts => 'Too many wrong attempts. Please try again in an hour.';
+  String get errorTooManyAttempts =>
+      'Too many wrong attempts. Please try again in an hour.';
 
   @override
   String get errorWeddingClosed => 'This wedding is currently closed.';
@@ -240,7 +242,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'After a new code is created the old one stops working. Guests who already joined are not affected.';
 
   @override
-  String get shareCodeHint => 'Put this code on invitations and tables. Guests enter it via \"I have a code\".';
+  String get shareCodeHint =>
+      'Put this code on invitations and tables. Guests enter it via \"I have a code\".';
 
   @override
   String rsvpSummary(int yes, int no, int maybe, int none) {
@@ -248,8 +251,114 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get moduleClosedEdit => 'The editing period for this section has ended.';
+  String get moduleClosedEdit =>
+      'The editing period for this section has ended.';
 
   @override
   String get saveFailed => 'Could not save. The section may be closed.';
+
+  @override
+  String get noMemories => 'No memories yet. Be the first to add a photo.';
+
+  @override
+  String get addMemory => 'Add memory';
+
+  @override
+  String get uploadClosed => 'Uploading has ended. Shared memories stay here.';
+
+  @override
+  String get captionHint => 'Caption (optional)';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String uploading(int percent) {
+    return 'Uploading… $percent%';
+  }
+
+  @override
+  String uploadDone(int count) {
+    return '$count memories shared.';
+  }
+
+  @override
+  String get uploadFailed => 'Upload failed. The upload window may have ended.';
+
+  @override
+  String get fileTooLarge =>
+      'Some files were skipped: photos up to 15 MB, videos up to 150 MB.';
+
+  @override
+  String selectedCount(int count) {
+    return '$count files selected';
+  }
+
+  @override
+  String get comments => 'Comments';
+
+  @override
+  String get noComments => 'No comments yet.';
+
+  @override
+  String get writeComment => 'Write a comment';
+
+  @override
+  String get like => 'Like';
+
+  @override
+  String get report => 'Report';
+
+  @override
+  String get reportTitle => 'Why are you reporting this?';
+
+  @override
+  String get reasonInappropriate => 'Inappropriate content';
+
+  @override
+  String get reasonHarassment => 'Harassment or bullying';
+
+  @override
+  String get reasonNudity => 'Nudity';
+
+  @override
+  String get reasonCopyright => 'Copyright';
+
+  @override
+  String get reasonOther => 'Other';
+
+  @override
+  String get reportSent => 'Your report was sent to the hosts.';
+
+  @override
+  String get blockUser => 'Block person';
+
+  @override
+  String blockConfirm(String name) {
+    return 'Block $name? You will no longer see their posts and comments.';
+  }
+
+  @override
+  String get blocked => 'Blocked.';
+
+  @override
+  String get hide => 'Hide';
+
+  @override
+  String get unhide => 'Show again';
+
+  @override
+  String get hiddenBadge => 'Hidden (only you can see it)';
+
+  @override
+  String get deletePostConfirm => 'Delete this memory? This cannot be undone.';
+
+  @override
+  String get deleteCommentConfirm => 'Delete this comment?';
+
+  @override
+  String get videoLabel => 'Video';
+
+  @override
+  String get mediaUnavailable => 'Media unavailable';
 }

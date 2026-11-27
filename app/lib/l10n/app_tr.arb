@@ -101,5 +101,65 @@
     }
   },
   "moduleClosedEdit": "Bu bölümün düzenleme süresi doldu.",
-  "saveFailed": "Kaydedilemedi. Bölüm kapanmış olabilir."
+  "saveFailed": "Kaydedilemedi. Bölüm kapanmış olabilir.",
+  "noMemories": "Henüz anı paylaşılmadı. İlk fotoğrafı siz ekleyin.",
+  "addMemory": "Anı ekle",
+  "uploadClosed": "Yükleme süresi doldu. Paylaşılan anılar burada kalmaya devam eder.",
+  "captionHint": "Açıklama (isteğe bağlı)",
+  "share": "Paylaş",
+  "uploading": "Yükleniyor… %{percent}",
+  "@uploading": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "uploadDone": "{count} anı paylaşıldı.",
+  "@uploadDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "uploadFailed": "Yüklenemedi. Yükleme süresi dolmuş olabilir.",
+  "fileTooLarge": "Bazı dosyalar atlandı: fotoğraf en fazla 15 MB, video en fazla 150 MB olabilir.",
+  "selectedCount": "{count} dosya seçildi",
+  "@selectedCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "comments": "Yorumlar",
+  "noComments": "Henüz yorum yok.",
+  "writeComment": "Yorum yazın",
+  "like": "Beğen",
+  "report": "Şikayet et",
+  "reportTitle": "Neden şikayet ediyorsunuz?",
+  "reasonInappropriate": "Uygunsuz içerik",
+  "reasonHarassment": "Taciz veya zorbalık",
+  "reasonNudity": "Çıplaklık",
+  "reasonCopyright": "Telif hakkı",
+  "reasonOther": "Diğer",
+  "reportSent": "Şikayetiniz düğün sahibine iletildi.",
+  "blockUser": "Kişiyi engelle",
+  "blockConfirm": "{name} engellensin mi? Paylaşımlarını ve yorumlarını artık görmezsiniz.",
+  "@blockConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "blocked": "Engellendi.",
+  "hide": "Gizle",
+  "unhide": "Tekrar göster",
+  "hiddenBadge": "Gizli (sadece siz görüyorsunuz)",
+  "deletePostConfirm": "Bu anı silinsin mi? Bu işlem geri alınamaz.",
+  "deleteCommentConfirm": "Bu yorum silinsin mi?",
+  "videoLabel": "Video",
+  "mediaUnavailable": "Medya yüklenemedi"
 }

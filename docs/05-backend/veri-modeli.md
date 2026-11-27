@@ -52,7 +52,7 @@ Kapsam: ön modül, kodla katılım, A. Katılımcı Organizasyonu, B. Anı Payl
 - `joinAttempts/{uid}` (istemciye kapalı): deneme sayacı, kaba kuvvet koruması.
 
 ## Storage
-`weddings/{weddingId}/posts/{postId}/{dosya}`: yazma aktif üye + yükleme penceresi açık; görsel ≤ 15 MB, video ≤ 150 MB, sadece `image/*` ve `video/*`. Okuma: düğünün aktif üyeleri.
+`weddings/{weddingId}/posts/{postId}/{dosya}`: yalnız yeni dosya (üzerine yazma yok), yazma aktif üye + yükleme penceresi açık; görsel ≤ 15 MB, video ≤ 150 MB, sadece `image/*` ve `video/*`. Okuma: düğünün aktif üyeleri.
 
 ## Sunucu fonksiyonları (Cloud Functions, TypeScript)
 | Fonksiyon | Kim çağırır | Ne yapar |
@@ -62,6 +62,7 @@ Kapsam: ön modül, kodla katılım, A. Katılımcı Organizasyonu, B. Anı Payl
 | `adminUpdateModules` | Yönetici | Modül açık/kapalı ve sürelerini günceller |
 | `adminRotateCode` | Yönetici veya sahip (sadece davetli kodu) | Eski kodu kapatır, yenisini üretir |
 | `onLikeWrite`, `onCommentWrite` | Tetikleyici | Sayaçları günceller |
+| `onPostDelete` | Tetikleyici | Silinen gönderinin medyasını, beğeni ve yorumlarını temizler (sahip başkasının dosyasını Storage'dan silemediği için) |
 | `deleteAccount` | Kullanıcı | Hesabı ve kişisel verilerini siler (Play + KVKK) |
 
 ## Açık noktalar

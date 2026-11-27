@@ -28,7 +28,7 @@ service firebase.storage {
     match /weddings/{w}/posts/{p}/{file} {
       allow read: if isMember(w);
       // Yükleyen kişi yalnızca yeni dosya oluşturur, üzerine yazamaz
-      allow create: if isMember(w) && uploadOpen(w) && validMedia()
+      allow create: if resource == null && isMember(w) && uploadOpen(w) && validMedia()
         && request.resource.metadata.uploaderUid == request.auth.uid;
       allow delete: if isMember(w) && resource.metadata.uploaderUid == request.auth.uid;
     }
