@@ -7,6 +7,7 @@ import 'package:murevet/domain/models/membership.dart';
 import 'package:murevet/domain/models/wedding.dart';
 
 class FakeAuth implements AuthRepository {
+  // ignore: prefer_initializing_formals
   FakeAuth({AppUser? user}) : _user = user;
   AppUser? _user;
   final _ctrl = StreamController<AppUser?>.broadcast();
