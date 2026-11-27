@@ -41,8 +41,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get codeHint => 'e.g. ABC D234';
 
   @override
-  String get codeInvalidFormat =>
-      'The code must be 7 or 10 letters and digits.';
+  String get codeInvalidFormat => 'The code must be 7 or 10 letters and digits.';
 
   @override
   String get nameLabel => 'Your full name';
@@ -66,8 +65,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorCodeNotFound => 'This code is invalid or no longer in use.';
 
   @override
-  String get errorTooManyAttempts =>
-      'Too many wrong attempts. Please try again in an hour.';
+  String get errorTooManyAttempts => 'Too many wrong attempts. Please try again in an hour.';
 
   @override
   String get errorWeddingClosed => 'This wedding is currently closed.';
@@ -129,4 +127,129 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountDeleted => 'Your account was deleted.';
+
+  @override
+  String get announcements => 'Announcements';
+
+  @override
+  String get noAnnouncements => 'No announcements yet.';
+
+  @override
+  String get writeAnnouncement => 'Write an announcement';
+
+  @override
+  String get announcementHint => 'Message for your guests';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get program => 'Program';
+
+  @override
+  String get noEvents => 'No events yet.';
+
+  @override
+  String get addEvent => 'Add event';
+
+  @override
+  String get editEvent => 'Edit event';
+
+  @override
+  String get eventName => 'Event name';
+
+  @override
+  String get eventNameHint => 'e.g. Henna night, Ceremony';
+
+  @override
+  String get venueName => 'Venue';
+
+  @override
+  String get address => 'Address (optional)';
+
+  @override
+  String get mapUrl => 'Map link (optional)';
+
+  @override
+  String get mapUrlInvalid => 'The link must start with https://.';
+
+  @override
+  String get pickDate => 'Date';
+
+  @override
+  String get pickTime => 'Time';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get openMap => 'Open map';
+
+  @override
+  String get fieldRequired => 'This field is required.';
+
+  @override
+  String get rsvpTitle => 'Your RSVP';
+
+  @override
+  String get rsvpYes => 'Attending';
+
+  @override
+  String get rsvpNo => 'Can\'t attend';
+
+  @override
+  String get rsvpMaybe => 'Maybe';
+
+  @override
+  String get rsvpHeadcount => 'How many people?';
+
+  @override
+  String get rsvpNote => 'Note (optional)';
+
+  @override
+  String get rsvpSaved => 'Your answer was saved.';
+
+  @override
+  String get guests => 'Guests';
+
+  @override
+  String get pendingApprovals => 'Waiting for approval';
+
+  @override
+  String get approve => 'Approve';
+
+  @override
+  String get reject => 'Reject';
+
+  @override
+  String get removeGuest => 'Remove from wedding';
+
+  @override
+  String removeGuestConfirm(String name) {
+    return 'Remove $name from the wedding? They will no longer see its content.';
+  }
+
+  @override
+  String get guestCode => 'Guest code';
+
+  @override
+  String get rotateCode => 'New code';
+
+  @override
+  String get rotateCodeConfirm =>
+      'After a new code is created the old one stops working. Guests who already joined are not affected.';
+
+  @override
+  String get shareCodeHint => 'Put this code on invitations and tables. Guests enter it via \"I have a code\".';
+
+  @override
+  String rsvpSummary(int yes, int no, int maybe, int none) {
+    return '$yes attending · $no not attending · $maybe maybe · $none no answer';
+  }
+
+  @override
+  String get moduleClosedEdit => 'The editing period for this section has ended.';
+
+  @override
+  String get saveFailed => 'Could not save. The section may be closed.';
 }

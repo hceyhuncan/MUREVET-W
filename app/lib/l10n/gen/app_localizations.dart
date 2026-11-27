@@ -62,8 +62,7 @@ import 'app_localizations_tr.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +70,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,19 +82,15 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('tr'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('tr')];
 
   /// No description provided for @appName.
   ///
@@ -331,10 +325,249 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Hesabınız silindi.'**
   String get accountDeleted;
+
+  /// No description provided for @announcements.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyurular'**
+  String get announcements;
+
+  /// No description provided for @noAnnouncements.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz duyuru yok.'**
+  String get noAnnouncements;
+
+  /// No description provided for @writeAnnouncement.
+  ///
+  /// In tr, this message translates to:
+  /// **'Duyuru yaz'**
+  String get writeAnnouncement;
+
+  /// No description provided for @announcementHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Davetlilere iletmek istediğiniz mesaj'**
+  String get announcementHint;
+
+  /// No description provided for @send.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gönder'**
+  String get send;
+
+  /// No description provided for @program.
+  ///
+  /// In tr, this message translates to:
+  /// **'Program'**
+  String get program;
+
+  /// No description provided for @noEvents.
+  ///
+  /// In tr, this message translates to:
+  /// **'Henüz etkinlik eklenmedi.'**
+  String get noEvents;
+
+  /// No description provided for @addEvent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik ekle'**
+  String get addEvent;
+
+  /// No description provided for @editEvent.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinliği düzenle'**
+  String get editEvent;
+
+  /// No description provided for @eventName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Etkinlik adı'**
+  String get eventName;
+
+  /// No description provided for @eventNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örn. Kına, Nikâh, Düğün'**
+  String get eventNameHint;
+
+  /// No description provided for @venueName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Mekân'**
+  String get venueName;
+
+  /// No description provided for @address.
+  ///
+  /// In tr, this message translates to:
+  /// **'Adres (isteğe bağlı)'**
+  String get address;
+
+  /// No description provided for @mapUrl.
+  ///
+  /// In tr, this message translates to:
+  /// **'Harita bağlantısı (isteğe bağlı)'**
+  String get mapUrl;
+
+  /// No description provided for @mapUrlInvalid.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bağlantı https:// ile başlamalı.'**
+  String get mapUrlInvalid;
+
+  /// No description provided for @pickDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tarih'**
+  String get pickDate;
+
+  /// No description provided for @pickTime.
+  ///
+  /// In tr, this message translates to:
+  /// **'Saat'**
+  String get pickTime;
+
+  /// No description provided for @save.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydet'**
+  String get save;
+
+  /// No description provided for @openMap.
+  ///
+  /// In tr, this message translates to:
+  /// **'Haritada aç'**
+  String get openMap;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu alan gerekli.'**
+  String get fieldRequired;
+
+  /// No description provided for @rsvpTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılım durumunuz'**
+  String get rsvpTitle;
+
+  /// No description provided for @rsvpYes.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılıyorum'**
+  String get rsvpYes;
+
+  /// No description provided for @rsvpNo.
+  ///
+  /// In tr, this message translates to:
+  /// **'Katılamıyorum'**
+  String get rsvpNo;
+
+  /// No description provided for @rsvpMaybe.
+  ///
+  /// In tr, this message translates to:
+  /// **'Belki'**
+  String get rsvpMaybe;
+
+  /// No description provided for @rsvpHeadcount.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaç kişi geleceksiniz?'**
+  String get rsvpHeadcount;
+
+  /// No description provided for @rsvpNote.
+  ///
+  /// In tr, this message translates to:
+  /// **'Not (isteğe bağlı)'**
+  String get rsvpNote;
+
+  /// No description provided for @rsvpSaved.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yanıtınız kaydedildi.'**
+  String get rsvpSaved;
+
+  /// No description provided for @guests.
+  ///
+  /// In tr, this message translates to:
+  /// **'Davetliler'**
+  String get guests;
+
+  /// No description provided for @pendingApprovals.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onay bekleyenler'**
+  String get pendingApprovals;
+
+  /// No description provided for @approve.
+  ///
+  /// In tr, this message translates to:
+  /// **'Onayla'**
+  String get approve;
+
+  /// No description provided for @reject.
+  ///
+  /// In tr, this message translates to:
+  /// **'Reddet'**
+  String get reject;
+
+  /// No description provided for @removeGuest.
+  ///
+  /// In tr, this message translates to:
+  /// **'Düğünden çıkar'**
+  String get removeGuest;
+
+  /// No description provided for @removeGuestConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'{name} düğünden çıkarılsın mı? Bu kişi düğünün içeriğini artık göremeyecek.'**
+  String removeGuestConfirm(String name);
+
+  /// No description provided for @guestCode.
+  ///
+  /// In tr, this message translates to:
+  /// **'Davetli kodu'**
+  String get guestCode;
+
+  /// No description provided for @rotateCode.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kodu yenile'**
+  String get rotateCode;
+
+  /// No description provided for @rotateCodeConfirm.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yeni kod oluşturulunca eski kod çalışmaz. Daha önce katılanlar etkilenmez.'**
+  String get rotateCodeConfirm;
+
+  /// No description provided for @shareCodeHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu kodu davetiye ve masalara koyun. Davetliler uygulamada \"Kodum var\" ile girer.'**
+  String get shareCodeHint;
+
+  /// No description provided for @rsvpSummary.
+  ///
+  /// In tr, this message translates to:
+  /// **'{yes} kişi geliyor · {no} gelemiyor · {maybe} belki · {none} yanıtsız'**
+  String rsvpSummary(int yes, int no, int maybe, int none);
+
+  /// No description provided for @moduleClosedEdit.
+  ///
+  /// In tr, this message translates to:
+  /// **'Bu bölümün düzenleme süresi doldu.'**
+  String get moduleClosedEdit;
+
+  /// No description provided for @saveFailed.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kaydedilemedi. Bölüm kapanmış olabilir.'**
+  String get saveFailed;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -343,8 +576,7 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'tr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'tr'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

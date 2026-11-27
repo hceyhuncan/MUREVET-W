@@ -38,5 +38,68 @@
   "deleteAccountConfirm": "Hesabınız, yüklediğiniz tüm fotoğraf ve videolar, yorumlarınız ve LCV yanıtlarınız kalıcı olarak silinecek. Bu işlem geri alınamaz.",
   "cancel": "Vazgeç",
   "delete": "Sil",
-  "accountDeleted": "Hesabınız silindi."
+  "accountDeleted": "Hesabınız silindi.",
+  "announcements": "Duyurular",
+  "noAnnouncements": "Henüz duyuru yok.",
+  "writeAnnouncement": "Duyuru yaz",
+  "announcementHint": "Davetlilere iletmek istediğiniz mesaj",
+  "send": "Gönder",
+  "program": "Program",
+  "noEvents": "Henüz etkinlik eklenmedi.",
+  "addEvent": "Etkinlik ekle",
+  "editEvent": "Etkinliği düzenle",
+  "eventName": "Etkinlik adı",
+  "eventNameHint": "Örn. Kına, Nikâh, Düğün",
+  "venueName": "Mekân",
+  "address": "Adres (isteğe bağlı)",
+  "mapUrl": "Harita bağlantısı (isteğe bağlı)",
+  "mapUrlInvalid": "Bağlantı https:// ile başlamalı.",
+  "pickDate": "Tarih",
+  "pickTime": "Saat",
+  "save": "Kaydet",
+  "openMap": "Haritada aç",
+  "fieldRequired": "Bu alan gerekli.",
+  "rsvpTitle": "Katılım durumunuz",
+  "rsvpYes": "Katılıyorum",
+  "rsvpNo": "Katılamıyorum",
+  "rsvpMaybe": "Belki",
+  "rsvpHeadcount": "Kaç kişi geleceksiniz?",
+  "rsvpNote": "Not (isteğe bağlı)",
+  "rsvpSaved": "Yanıtınız kaydedildi.",
+  "guests": "Davetliler",
+  "pendingApprovals": "Onay bekleyenler",
+  "approve": "Onayla",
+  "reject": "Reddet",
+  "removeGuest": "Düğünden çıkar",
+  "removeGuestConfirm": "{name} düğünden çıkarılsın mı? Bu kişi düğünün içeriğini artık göremeyecek.",
+  "@removeGuestConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "guestCode": "Davetli kodu",
+  "rotateCode": "Kodu yenile",
+  "rotateCodeConfirm": "Yeni kod oluşturulunca eski kod çalışmaz. Daha önce katılanlar etkilenmez.",
+  "shareCodeHint": "Bu kodu davetiye ve masalara koyun. Davetliler uygulamada \"Kodum var\" ile girer.",
+  "rsvpSummary": "{yes} kişi geliyor · {no} gelemiyor · {maybe} belki · {none} yanıtsız",
+  "@rsvpSummary": {
+    "placeholders": {
+      "yes": {
+        "type": "int"
+      },
+      "no": {
+        "type": "int"
+      },
+      "maybe": {
+        "type": "int"
+      },
+      "none": {
+        "type": "int"
+      }
+    }
+  },
+  "moduleClosedEdit": "Bu bölümün düzenleme süresi doldu.",
+  "saveFailed": "Kaydedilemedi. Bölüm kapanmış olabilir."
 }
