@@ -1,0 +1,215 @@
+rules_version = '2';
+
+// ===============================================================
+// Murevet Firestore Güvenlik Kuralları (PROTOTİP, gözden geçirilmeli)
+// Veri modeli: docs/05-backend/veri-modeli.md
+//
+// weddings/{w}                 : title, coverPath?, status, requireApproval,
+//                                modules{katilimci{enabled,start,end},
+//                                        paylasim{enabled,uploadStart,uploadEnd}},
+//                                contractRef?, createdAt          (yalnız sunucu yazar)
+// weddings/{w}/private/invite  : guestCode, ownerCode (yalnız sunucu yazar)
+// weddings/{w}/members/{uid}   : role(owner|guest), status(active|pending|removed),
+//                                displayName, joinedAt            (sunucu oluşturur)
+// weddings/{w}/events/{e}      : name, startAt, venueName, address?, mapUrl?
+// weddings/{w}/announcements/{a}: text, createdAt, authorUid
+// weddings/{w}/rsvps/{uid}     : answer, headcount, note?, updatedAt
+// weddings/{w}/posts/{p}       : authorUid, authorName, mediaPath, mediaType,
+//                                caption?, eventId?, batchId?, createdAt, status,
+//                                likeCount, commentCount
+// .../posts/{p}/likes/{uid}    : uid, createdAt
+// .../posts/{p}/comments/{c}   : authorUid, authorName, text, createdAt, status
+// weddings/{w}/reports/{r}     : reporterUid, targetType, targetId, reason, createdAt
+// users/{uid}                  : displayName, email?, createdAt
+// users/{uid}/blocks/{b}       : createdAt
+// users/{uid}/memberships/{w}  : weddingId, title, role, joinedAt (sunucu yazar)
+// codes/{code}, joinAttempts/{uid} : yalnız sunucu
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------------- Yardımcılar ----------------
+    function signedIn() { return request.auth != null; }
+    function isAdmin() { return signedIn() && request.auth.token.admin == true; }
+    function isSelf(uid) { return signedIn() && request.auth.uid == uid; }
+    function data() { return request.resource.data; }
+    function onlyFields(fields) { return data().keys().hasOnly(fields); }
+    function hasFields(fields) { return data().keys().hasAll(fields); }
+    function str(v, minLen, maxLen) { return v is string && v.size() >= minLen && v.size() <= maxLen; }
+    function optStr(field, maxLen) {
+      return !(field in data()) || str(data()[field], 0, maxLen);
+    }
+    function unchanged(fields) {
+      return !data().diff(resource.data).affectedKeys().hasAny(fields);
+    }
+    function onlyChanged(fields) {
+      return data().diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    function wedding(w) { return get(/databases/$(database)/documents/weddings/$(w)).data; }
+    function memberDoc(w) {
+      return get(/databases/$(database)/documents/weddings/$(w)/members/$(request.auth.uid));
+    }
+    function isMember(w) {
+      return signedIn()
+        && exists(/databases/$(database)/documents/weddings/$(w)/members/$(request.auth.uid))
+        && memberDoc(w).data.status == 'active';
+    }
+    function isWeddingOwner(w) { return isMember(w) && memberDoc(w).data.role == 'owner'; }
+    function weddingOpen(w) { return wedding(w).status == 'active'; }
+
+    // Modül A: açık ve süre içinde
+    function katilimciOn(w) {
+      let m = wedding(w).modules.katilimci;
+      return m.enabled == true && request.time >= m.start && request.time <= m.end;
+    }
+    function katilimciEnabled(w) { return wedding(w).modules.katilimci.enabled == true; }
+    // Modül B: görüntüleme süresiz, yükleme pencereli
+    function paylasimEnabled(w) { return wedding(w).modules.paylasim.enabled == true; }
+    function uploadOpen(w) {
+      let m = wedding(w).modules.paylasim;
+      return m.enabled == true && request.time >= m.uploadStart && request.time <= m.uploadEnd;
+    }
+
+    // ---------------- Kullanıcı ----------------
+    match /users/{uid} {
+      allow read: if isSelf(uid);
+      allow create: if isSelf(uid) && onlyFields(['displayName', 'email', 'createdAt'])
+        && str(data().displayName, 1, 60) && optStr('email', 254)
+        && data().createdAt == request.time;
+      allow update: if isSelf(uid) && onlyFields(['displayName', 'email', 'createdAt'])
+        && str(data().displayName, 1, 60) && optStr('email', 254) && unchanged(['createdAt']);
+      allow delete: if isSelf(uid);
+
+      match /blocks/{blocked} {
+        allow read, delete: if isSelf(uid);
+        allow create: if isSelf(uid) && blocked != uid
+          && onlyFields(['createdAt']) && data().createdAt == request.time;
+      }
+      match /memberships/{w} {
+        allow read: if isSelf(uid);
+      }
+    }
+
+    // ---------------- Düğün ----------------
+    match /weddings/{w} {
+      allow read: if isMember(w) || isAdmin();
+      // Oluşturma ve modül değişikliği yalnızca sunucu fonksiyonlarından (Admin SDK).
+
+      // Davet kodları: sadece sahip ve yönetici görür; yalnız sunucu yazar
+      match /private/{doc} {
+        allow read: if isWeddingOwner(w) || isAdmin();
+      }
+
+      match /members/{uid} {
+        // Sahip tüm üyeleri görür; davetli aktif üyeleri görür (ad listesi).
+        allow read: if isAdmin() || isWeddingOwner(w)
+          || (isMember(w) && resource.data.status == 'active')
+          || isSelf(uid);
+        // Kendi görünen adını değiştirme
+        allow update: if isSelf(uid) && isMember(w) && weddingOpen(w)
+          && onlyChanged(['displayName']) && str(data().displayName, 1, 60);
+        // Sahip: davetliyi onaylar veya çıkarır (sahip rolüne dokunamaz)
+        allow update: if isWeddingOwner(w) && weddingOpen(w) && !isSelf(uid)
+          && resource.data.role == 'guest'
+          && onlyChanged(['status']) && data().status in ['active', 'removed'];
+      }
+
+      // ----- Modül A: Katılımcı Organizasyonu -----
+      match /events/{e} {
+        allow read: if (isMember(w) && katilimciEnabled(w)) || isAdmin();
+        allow create, update: if isWeddingOwner(w) && weddingOpen(w) && katilimciOn(w)
+          && isValidEvent();
+        allow delete: if isWeddingOwner(w) && weddingOpen(w) && katilimciOn(w);
+        function isValidEvent() {
+          return onlyFields(['name', 'startAt', 'venueName', 'address', 'mapUrl'])
+            && hasFields(['name', 'startAt', 'venueName'])
+            && str(data().name, 1, 60) && data().startAt is timestamp
+            && str(data().venueName, 1, 100) && optStr('address', 200)
+            && (!('mapUrl' in data()) || (str(data().mapUrl, 0, 500) && data().mapUrl.matches('^https://.*')));
+        }
+      }
+
+      match /announcements/{a} {
+        allow read: if (isMember(w) && katilimciEnabled(w)) || isAdmin();
+        allow create: if isWeddingOwner(w) && weddingOpen(w) && katilimciOn(w)
+          && onlyFields(['text', 'createdAt', 'authorUid']) && hasFields(['text', 'createdAt', 'authorUid'])
+          && str(data().text, 1, 1000) && data().createdAt == request.time
+          && data().authorUid == request.auth.uid;
+        allow delete: if isWeddingOwner(w) && weddingOpen(w);
+      }
+
+      match /rsvps/{uid} {
+        allow read: if isSelf(uid) || isWeddingOwner(w) || isAdmin();
+        allow create, update: if isSelf(uid) && isMember(w) && weddingOpen(w) && katilimciOn(w)
+          && onlyFields(['answer', 'headcount', 'note', 'updatedAt'])
+          && hasFields(['answer', 'headcount', 'updatedAt'])
+          && data().answer in ['yes', 'no', 'maybe']
+          && data().headcount is int && data().headcount >= 1 && data().headcount <= 10
+          && optStr('note', 300) && data().updatedAt == request.time;
+      }
+
+      // ----- Modül B: Anı Paylaşımı -----
+      match /posts/{p} {
+        allow read: if (isMember(w) && paylasimEnabled(w)
+                        && (resource.data.status == 'visible' || isWeddingOwner(w)
+                            || resource.data.authorUid == request.auth.uid))
+                    || isAdmin();
+        allow create: if isMember(w) && weddingOpen(w) && uploadOpen(w)
+          && onlyFields(['authorUid', 'authorName', 'mediaPath', 'mediaType', 'caption',
+                         'eventId', 'batchId', 'createdAt', 'status', 'likeCount', 'commentCount'])
+          && hasFields(['authorUid', 'authorName', 'mediaPath', 'mediaType', 'createdAt',
+                        'status', 'likeCount', 'commentCount'])
+          && data().authorUid == request.auth.uid
+          && str(data().authorName, 1, 60)
+          && data().mediaPath is string
+          && data().mediaPath.matches('^weddings/' + w + '/posts/' + p + '/[A-Za-z0-9._-]{1,100}$')
+          && data().mediaType in ['image', 'video']
+          && optStr('caption', 500) && optStr('eventId', 64) && optStr('batchId', 64)
+          && data().createdAt == request.time
+          && data().status == 'visible' && data().likeCount == 0 && data().commentCount == 0;
+        // Sahip gizler/geri açar
+        allow update: if isWeddingOwner(w) && weddingOpen(w)
+          && onlyChanged(['status']) && data().status in ['visible', 'hidden'];
+        // Yazar kendi gönderisini, sahip herhangi birini silebilir
+        allow delete: if (isMember(w) && resource.data.authorUid == request.auth.uid) || isWeddingOwner(w);
+
+        match /likes/{uid} {
+          allow read: if isMember(w) && paylasimEnabled(w);
+          allow create: if isSelf(uid) && isMember(w) && weddingOpen(w) && paylasimEnabled(w)
+            && onlyFields(['uid', 'createdAt']) && data().uid == uid && data().createdAt == request.time;
+          allow delete: if isSelf(uid) && isMember(w);
+        }
+
+        match /comments/{c} {
+          allow read: if isMember(w) && paylasimEnabled(w)
+            && (resource.data.status == 'visible' || isWeddingOwner(w));
+          allow create: if isMember(w) && weddingOpen(w) && paylasimEnabled(w)
+            && onlyFields(['authorUid', 'authorName', 'text', 'createdAt', 'status'])
+            && hasFields(['authorUid', 'authorName', 'text', 'createdAt', 'status'])
+            && data().authorUid == request.auth.uid && str(data().authorName, 1, 60)
+            && str(data().text, 1, 500) && data().createdAt == request.time
+            && data().status == 'visible';
+          allow update: if isWeddingOwner(w) && onlyChanged(['status'])
+            && data().status in ['visible', 'hidden'];
+          allow delete: if (isMember(w) && resource.data.authorUid == request.auth.uid) || isWeddingOwner(w);
+        }
+      }
+
+      match /reports/{r} {
+        allow read: if isWeddingOwner(w) || isAdmin();
+        allow create: if isMember(w)
+          && onlyFields(['reporterUid', 'targetType', 'targetId', 'reason', 'createdAt'])
+          && hasFields(['reporterUid', 'targetType', 'targetId', 'reason', 'createdAt'])
+          && data().reporterUid == request.auth.uid
+          && data().targetType in ['post', 'comment', 'member']
+          && str(data().targetId, 1, 128)
+          && data().reason in ['inappropriate', 'harassment', 'nudity', 'copyright', 'other']
+          && data().createdAt == request.time;
+      }
+    }
+
+    // codes, joinAttempts ve diğer her şey: istemciye kapalı (varsayılan red)
+  }
+}
