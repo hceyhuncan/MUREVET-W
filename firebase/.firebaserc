@@ -1,1 +1,1 @@
-{ "projects": { "default": "demo-murevet" } }
+{ "projects": { "default": "demo-murevet" }, "targets": { "demo-murevet": { "hosting": { "admin": ["demo-murevet"] } } } }
