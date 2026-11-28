@@ -159,6 +159,13 @@ export const adminUpdateWedding = onCall(async (req) => {
   const ref = db().doc(`weddings/${weddingId}`);
   if (!(await ref.get()).exists) throw new HttpsError('not-found', 'Düğün bulunamadı');
   await ref.update(update);
+  // Davetlilerin "Düğünlerim" listesindeki ad da güncellensin
+  if (typeof update.title === 'string') {
+    const members = await ref.collection('members').get();
+    const batch = db().batch();
+    members.docs.forEach((m) => batch.set(db().doc(`users/${m.id}/memberships/${weddingId}`), { title: update.title }, { merge: true }));
+    await batch.commit();
+  }
   return { ok: true };
 });
 
